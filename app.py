@@ -3,9 +3,11 @@ from flask import Flask, render_template, redirect, request, url_for
 from flask_restful import Api
 
 from db import db
+
 # from user_model import UserModel
 # from user_resource import UserListResource, UserResource
 from widget.widget_model import WidgetModel
+
 # from widget.widget_resource import WidgetListResource, WidgetResource
 
 
@@ -13,12 +15,20 @@ app = Flask(__name__)
 
 # Look for environment variable DATABASE_URL.
 # If found, use it; otherwise, use local SQLite file.
-app.config["SQLALCHEMY_DATABASE_URI"] = \
-    os.environ.get("DATABASE_URL", "sqlite:///data.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+    "DATABASE_URL", "sqlite:///data.db"
+)
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
+
+
+@app.template_filter("hide_none")
+def suppress_none(value):
+    """Suppress converting NoneType to 'None' """
+    return value if value is not None else ""
+
 
 api = Api(app)
 
@@ -78,7 +88,8 @@ def post_edit_widget(id):
     if widget:
         widget.name = request.form.get("name")
         widget.color = request.form.get("color")
-        widget.weight = request.form.get("weight")
+        weight = request.form.get("weight", "")
+        widget.weight = weight if len(weight) > 0 else None
         db.session.commit()
     else:
         print(f"POST to {request.url} found no matching entry")
