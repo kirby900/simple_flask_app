@@ -1,101 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %} 
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Widgets</title>
-    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-</head>
+<h4 class="mt-3 mb-3">Widgets</h4>
 
-<body>
-    <div class="container-fluid">
-        <h4 class="mt-3 mb-3">Widgets</h4>
-
-        <form action="/widgets" method="post" class="mb-3">
-            <div class="form-row">
-                <div class="col-sm-4 mb-1">
-                    <input type="text" name="name" class="form-control"
-                        placeholder="Name" autofocus />
-                </div>
-                <div class="col-sm-3 mb-1">
-                    <input type="text" name="color" class="form-control"
-                        placeholder="Color" />
-                </div>
-                <div class="col-sm-3 mb-1">
-                    <input type="text" name="weight" class="form-control"
-                        placeholder="Weight" />
-                </div>
-                <div class="col-sm-2">
-                    <input type="submit" value="Add" class="btn btn-primary" />
-                </div>
-            </div>
-        </form>
-
-        <!-- {% for widget in widgets %}
-        {% if loop.first %}
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Color</th>
-                    <th>Weight</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% endif %}
-                <tr>
-                    <td>{{widget.id}}</td>
-                    <td>{{widget.name}}</td>
-                    <td>{{widget.color}}</td>
-                    <td>{{widget.weight}}</td>
-                    <td>
-                        <a href="/widgets/{{widget.id}}/edit">Edit</a>
-                        &nbsp;
-                        <a href="/widgets/{{widget.id}}/delete">Delete</a>
-                    </td>
-                </tr>
-                {% if loop.last %}
-            </tbody>
-        </table>
-        {% endif %}
-        {% else %}
-        <p>No widgets yet</p>
-        {% endfor %} -->
-
-        <section>
-            <h4>Widgets</h4>
-            <div class="form-row">
-                {% for widget in widgets %}
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <!-- <li>ID: {{widget.id}}</li> -->
-                                <li>Name: {{widget.name}}</li>
-                                <li>Color: {{widget.color}}</li>
-                                <li>Weight: {{widget.weight|hide_none}}</li>
-                                <li>
-                                    <a
-                                        href="/widgets/{{widget.id}}/edit">Edit</a>
-                                    &nbsp;
-                                    <a
-                                        href="/widgets/{{widget.id}}/delete">Delete</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-                <div class="col-sm-12">
-                    <p>No widgets yet</p>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
+<form action="/widgets" method="post" class="mb-3">
+  <div class="form-row">
+    <div class="col-sm-4 mb-1">
+      <input
+        type="text"
+        name="name"
+        class="form-control"
+        placeholder="Name"
+        autofocus
+      />
     </div>
-</body>
+    <div class="col-sm-3 mb-1">
+      <input
+        type="text"
+        name="color"
+        class="form-control"
+        placeholder="Color"
+      />
+    </div>
+    <div class="col-sm-3 mb-1">
+      <input
+        type="text"
+        name="weight"
+        class="form-control"
+        placeholder="Weight"
+      />
+    </div>
+    <div class="col-sm-2">
+      <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+  </div>
+</form>
 
-</html>
+<section>
+  <h4>Widgets</h4>
+  <div class="form-row">
+    {% for widget in widgets %}
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="card mb-2">
+        <div class="card-body">
+          <ul class="list-unstyled">
+            <!-- <li>ID: {{widget.id}}</li> -->
+            <li>Name: {{widget.name}}</li>
+            <li>Color: {{widget.color}}</li>
+            <li>Weight: {{widget.weight|hide_none}}</li>
+            <li>
+              <a href="/widgets/{{widget.id}}/edit">Edit</a>
+              &nbsp;
+              <a href="/widgets/{{widget.id}}/delete">Delete</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="col-sm-12">
+      <p>No widgets yet</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}
